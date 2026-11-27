@@ -1,22 +1,21 @@
-// // Array of image paths
-// const images = [
-//    "02.jpg", "03.jpg", "05.jpg"
-// ];
+document.addEventListener('DOMContentLoaded', () => {
+    const slides = Array.from(document.querySelectorAll('.slideshow'));
+    if (slides.length === 0) return;
 
-let currentIndex = 0; // Track the current image index
-const slideshowElements = document.querySelectorAll('.slideshow'); // Get all images with the class 'slideshow'
+    let currentIndex = 0;
 
-function updateSlideshow() {
-    // Update the src of the first image in the 'slideshow' class group
-    slideshowElements.forEach(img => img.style.display = 'none'); // Hide all images
-    slideshowElements[currentIndex].style.display = 'block'; // Show the current image
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('is-active', i === index);
+        });
+    }
 
-    currentIndex = (currentIndex + 1) % slideshowElements.length; // Loop back to the first image
-}
+    showSlide(currentIndex);
 
-// Initially hide all images except the first
-slideshowElements.forEach(img => img.style.display = 'none');
-slideshowElements[0].style.display = 'block';
-
-// Change image every 10 seconds (10000ms)
-setInterval(updateSlideshow, 10000);
+    if (slides.length > 1) {
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }, 10000);
+    }
+});
