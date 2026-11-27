@@ -1,24 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const slideshowElements = document.querySelectorAll(".slideshow");
+// // Array of image paths
+// const images = [
+//    "02.jpg", "03.jpg", "05.jpg"
+// ];
 
-    // Do nothing if the current page has no .slideshow images
-    if (slideshowElements.length === 0) {
-        return;
-    }
+let currentIndex = 0; // Track the current image index
+const slideshowElements = document.querySelectorAll('.slideshow'); // Get all images with the class 'slideshow'
 
-    let currentIndex = 0;
+function updateSlideshow() {
+    // Update the src of the first image in the 'slideshow' class group
+    slideshowElements.forEach(img => img.style.display = 'none'); // Hide all images
+    slideshowElements[currentIndex].style.display = 'block'; // Show the current image
 
-    // Show only the first slide initially
-    slideshowElements.forEach((img, index) => {
-        img.style.display = index === 0 ? "block" : "none";
-    });
+    currentIndex = (currentIndex + 1) % slideshowElements.length; // Loop back to the first image
+}
 
-    function updateSlideshow() {
-        slideshowElements[currentIndex].style.display = "none";
-        currentIndex = (currentIndex + 1) % slideshowElements.length;
-        slideshowElements[currentIndex].style.display = "block";
-    }
+// Initially hide all images except the first
+slideshowElements.forEach(img => img.style.display = 'none');
+slideshowElements[0].style.display = 'block';
 
-    // Cycle every 10 seconds
-    setInterval(updateSlideshow, 10000);
-});
+// Change image every 10 seconds (10000ms)
+setInterval(updateSlideshow, 10000);
